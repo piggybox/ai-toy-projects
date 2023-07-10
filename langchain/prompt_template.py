@@ -11,3 +11,4 @@ prompt = PromptTemplate(
 
 # user question
 question = "Which NFL team won the Super Bowl in the 2010 season?"
+      
