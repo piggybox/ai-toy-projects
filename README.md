@@ -1,1 +1,1 @@
-# Learning Langchain
+# Repo for various AI learning materials
