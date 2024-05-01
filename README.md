@@ -1,1 +1,1 @@
-# Repo for various AI learning materials
+# An umbrella for toy AI projects
