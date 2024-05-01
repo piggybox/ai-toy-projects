@@ -1,12 +1,14 @@
 import Header from "./component/header/header"
-import Head from 'next/head'
+
+import { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'OpenAI Writer',
+}
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <link rel="shortcut icon" href="/static/favicon.ico" />
-      </Head>
       <Header />
     </>
   );
