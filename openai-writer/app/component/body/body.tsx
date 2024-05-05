@@ -15,16 +15,28 @@ export default function Body() {
         STYPE: "style"
     }
 
+    const handleToneChange = async (event) => {
+        const toneState = event.target.value
+        setTone(toneState)
+    }
+
+    const handleStyleChange = async (event) => {
+        const styleState = event.target.value
+        setStyle(styleState)
+    }
+
     return <div>
         <div>
-            <select className={styles.tone_change} name="Change tone" id="style-selector">
+            <select className={styles.tone_change} name="Change tone" id="style-selector"
+                onChange={handleToneChange}>
                 <option value="funny">Funny</option>
                 <option value="professional">Professiona</option>
                 <option value="casual">Casual</option>
             </select>
             <button className={styles.submit_button_tone} name='Change tone' id='change_tone_btn'>Change Tone</button>
 
-            <select className={styles.style_change} name='Change Style' id="change_style_dropdown">
+            <select className={styles.style_change} name='Change Style' id="change_style_dropdown"
+                onChange={handleStyleChange}>
                 <option value="summarize">Summarize</option>
                 <option value="vocab_suggestion">Vocab Suggestion</option>
                 <option value="improve">Improve</option>
