@@ -1,16 +1,17 @@
 import OpenAI from "openai";
 
+const openai = new OpenAI();
+
 
 const openAIChatWrapper = async (promptValue: string) => {
-    const openai = new OpenAI();
-
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
-            { "role": "assistant", "content": "You are a helpful assistant." },
+            { "role": "system", "content": "You are a helpful assistant." },
             { "role": "user", "content": promptValue }],
     });
 
+    console.log(completion.choices[0]);
     return completion.choices[0].message.content;
 };
 
