@@ -32,3 +32,10 @@ export const getStyledText = async (content: string, context: string) => {
     const styledContent = openAIChatWrapper(promptValue);
     return styledContent;
 }
+
+export const getToneSuggestion = async (content: string, context: string) => {
+    const tonePrompt = `Paraphrase below text in ${context} tone. \n "${content}"`;
+
+    const toneContent = openAIChatWrapper(tonePrompt);
+    return toneContent;
+}
