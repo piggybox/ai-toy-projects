@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import styles from "./body.module.css"
+import { getResult } from "@/app/service/api-wrapper"
 
 
 export default function Body() {
@@ -12,17 +13,31 @@ export default function Body() {
 
     const TYPE = {
         TONE: "tone",
-        STYPE: "style"
+        STYLE: "style"
     }
 
-    const handleToneChange = async (event) => {
-        const toneState = event.target.value
-        setTone(toneState)
+    const handleToneChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const toneState = event.target.value;
+        setTone(toneState);
     }
 
-    const handleStyleChange = async (event) => {
-        const styleState = event.target.value
-        setStyle(styleState)
+    const handleStyleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const styleState = event.target.value;
+        setStyle(styleState);
+    }
+
+    const getToneValue = async () => {
+        getResult({ content: writing, type: TYPE.TONE, context: tone }).then((response) => {
+            console.log(response);
+            setResponse(response ?? "");
+        })
+    }
+
+    const getStyleValue = async () => {
+        getResult({ content: writing, type: TYPE.STYLE, context: style }).then((response) => {
+            console.log(response);
+            setResponse(response ?? "");
+        })
     }
 
     return <div>
@@ -33,7 +48,8 @@ export default function Body() {
                 <option value="professional">Professiona</option>
                 <option value="casual">Casual</option>
             </select>
-            <button className={styles.submit_button_tone} name='Change tone' id='change_tone_btn'>Change Tone</button>
+            <button className={styles.submit_button_tone} name='Change tone' id='change_tone_btn'
+                onClick={getToneValue}>Change Tone</button>
 
             <select className={styles.style_change} name='Change Style' id="change_style_dropdown"
                 onChange={handleStyleChange}>
@@ -41,14 +57,16 @@ export default function Body() {
                 <option value="vocab_suggestion">Vocab Suggestion</option>
                 <option value="improve">Improve</option>
             </select>
-            <button className={styles.submit_button_action} id='change_style_button'>Take Action</button>
+            <button className={styles.submit_button_action} id='change_style_button'
+                onClick={getStyleValue}>Take Action</button>
         </div>
         <div className={styles.writing_area}>
-            <textarea placeholder='Write your content here...' id='input-area'>
+            <textarea placeholder='Write your content here...' id='input-area'
+                onChange={e => setWriting(e.target.value)}>
             </textarea>
         </div>
         <div className={styles.response_area}>
-            <textarea placeholder='AI response' id='response-area'>
+            <textarea placeholder='AI response' id='response-area' value={response} readOnly={true}>
             </textarea>
         </div>
     </div>
