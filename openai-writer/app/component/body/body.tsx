@@ -1,6 +1,20 @@
+'use client'
+
+import { useState } from "react"
 import styles from "./body.module.css"
 
+
 export default function Body() {
+    const [tone, setTone] = useState("funny")
+    const [style, setStyle] = useState("summarize")
+    const [writing, setWriting] = useState("")
+    const [response, setResponse] = useState("")
+
+    const TYPE = {
+        TONE: "tone",
+        STYPE: "style"
+    }
+
     return <div>
         <div>
             <select className={styles.tone_change} name="Change tone" id="style-selector">
