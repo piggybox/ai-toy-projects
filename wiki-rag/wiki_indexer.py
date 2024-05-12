@@ -1,6 +1,5 @@
 from llama_index.core import download_loader, VectorStoreIndex, ServiceContext
 from llama_index.core.node_parser import SimpleNodeParser
-# from llama_index.text_splitter import get_default_text_splitter
 import openai
 from pydantic import BaseModel
 from llama_index.program.openai import OpenAIPydanticProgram
@@ -43,14 +42,16 @@ def create_wikidocs(wikipage_requests):
 
 def create_index(query):
     global index
-
+    wikipage_requests = wikipage_list(query)
+    documents = create_wikidocs(wikipage_requests)
+    parser = SimpleNodeParser.from_defaults(chunk_size=150, chunk_overlap=45)
+    service_context = ServiceContext.from_defaults(node_parser=parser)
+    index = VectorStoreIndex.from_documents(documents, service_context=service_context)
 
     return index
 
 
 if __name__ == "__main__":
-    # query = "/get wikipages: paris, lagos, lao"
-    # index = create_index(query)
-    # print("INDEX CREATED", index)
-
-    print(create_wikidocs("paris"))
+    query = "/get wikipages: paris, lagos, lao"
+    index = create_index(query)
+    print("INDEX CREATED", index)
