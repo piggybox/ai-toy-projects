@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from llama_index.program.openai import OpenAIPydanticProgram
 from utils import get_apikey
 
+# wiki indexer
+
 
 # define the data model in pydantic
 class WikiPageList(BaseModel):
