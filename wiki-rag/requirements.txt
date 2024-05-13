@@ -1,0 +1,5 @@
+chainlit==1.1.0
+llama_index==0.10.36
+openai==1.28.1
+pydantic==2.7.1
+PyYAML==6.0.1
