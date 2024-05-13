@@ -76,7 +76,7 @@ async def setup_agent(settings):
 
 
 @cl.on_message
-async def main(message: str):
+async def main(message: cl.Message):
     if agent:
-        response = await cl.make_async(agent.chat)(message)
+        response = await cl.make_async(agent.chat)(message.content)
         await cl.Message(author="Agent", content=response).send()
