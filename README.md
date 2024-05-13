@@ -1,1 +1,1 @@
-# An umbrella for toy AI projects
+# A collection of toy AI projects
