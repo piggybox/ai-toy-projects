@@ -1,10 +1,10 @@
-from llama_index.tools import QueryEngineTool, ToolMetadata
+from llama_index.core.tools import QueryEngineTool, ToolMetadata
 import chainlit as cl
 from chainlit.input_widget import Select, TextInput
 import openai
-from llama_index.agent import ReActAgent
-from llama_index.llms import OpenAI
-from llama_index.callbacks.base import CallbackManager
+from llama_index.core.agent import ReActAgent
+from llama_index.llms.openai import OpenAI
+from llama_index.core.callbacks.base import CallbackManager
 from wiki_indexer import create_index
 from utils import get_apikey
 
@@ -22,19 +22,18 @@ async def on_chat_start():
         [
             Select(
                 id="MODEL",
-                label="OpenAI - Model" ,
+                label="OpenAI - Model",
                 values=["gpt-3.5-turbo", "gpt-4"],
                 initial_index=0,
             ),
-            TextInput(id="WikiPageRequest", label="Request Wikipage")
-            
+            TextInput(id="WikiPageRequest", label="Request Wikipage"),
         ]
     ).send()
 
 
 def wikisearch_engine(index):
     query_engine = index.as_query_engine(
-        response_mode="compact", verbose=True,similarity_top_k=80
+        response_mode="compact", verbose=True, similarity_top_k=80
     )
     return query_engine
 
@@ -42,11 +41,12 @@ def wikisearch_engine(index):
 def create_react_agent(MODEL):
     query_engine_tools = [
         QueryEngineTool(
-            query_engine=wikisearch_engine(),
+            query_engine=wikisearch_engine(index),
             metadata=ToolMetadata(
-                name ="Wikipedia Search",
-                description="Userful for performaing seraches on Wikipedia"
-            )),
+                name="Wikipedia Search",
+                description="Userful for performaing seraches on Wikipedia",
+            ),
+        ),
     ]
 
     openai.api_key = get_apikey()
@@ -64,12 +64,12 @@ def create_react_agent(MODEL):
 async def setup_agent(settings):
     global agent
     global index
-    query = 
-    index = 
+    query = settings["WikiPageRequest"]
+    index = create_index(query)
 
     print("on_settings_update", settings)
-    MODEL = 
-    agent = 
+    MODEL = settings["MODEL"]
+    agent = create_react_agent(MODEL)
     await cl.Message(
         author="Agent", content=f"""Wikipage(s) "{query}" successfully indexed"""
     ).send()
@@ -78,5 +78,5 @@ async def setup_agent(settings):
 @cl.on_message
 async def main(message: str):
     if agent:
-        response = # REPLACE THIS WITH YOUR CODE
+        response = await cl.make_async(agent.chat)(message)
         await cl.Message(author="Agent", content=response).send()
