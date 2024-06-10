@@ -3,3 +3,4 @@
 apikeys.yml
 *.pyc
 .chainlit
+.env
