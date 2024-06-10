@@ -27,13 +27,10 @@ if __name__ == "__main__":
         request_timeout=40.0,
     )
 
-    resp = llama.complete("Who is Paul Graham?")
-    print(resp)
-
     index = create_index()
     query_engine = index.as_query_engine(llm=llama)
     print(
         query_engine.query(
-            "What are the titles of all the books available? Show me the context used to derive your answer."
+            "如何入门占星学？请用中文回答"
         )
     )
