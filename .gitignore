@@ -5,3 +5,4 @@ apikeys.yml
 .chainlit
 .env
 *.pdf
+*.epub

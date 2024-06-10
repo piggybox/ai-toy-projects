@@ -16,7 +16,7 @@ nest_asyncio.apply()
 # Load data
 from llama_index.core import SimpleDirectoryReader
 
-documents = SimpleDirectoryReader(input_files=["input/metagpt.pdf"]).load_data()
+documents = SimpleDirectoryReader(input_files=["input/内在的天空.epub"]).load_data()
 
 
 # Define LLM and embedding model
@@ -68,10 +68,14 @@ query_engine = RouterQueryEngine(
     verbose=True,
 )
 
-response = query_engine.query("What is the summary of the document?")
-print(str(response))
 
-# print(len(response.source_nodes))
+# Example queries
 
-response = query_engine.query("How do agetns share information with other agetns?")
+# response = query_engine.query("What is the summary of the document?")
+# print(str(response))
+
+# response = query_engine.query("How do agetns share information with other agetns?")
+# print(str(response))
+
+response = query_engine.query("如何入门占星学？请用中文回答")
 print(str(response))
